@@ -1,16 +1,28 @@
 package com.teamjm.remade;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
-@Setter
 public class PostRequestDto {
-    private Long id;
-    private LocalDate createdDate;
-    private String contents;
+    private final Long id;
+    private final LocalDate createdDate;
+    private final String contents;
+
+    @Builder
+    public PostRequestDto(Long id, LocalDate createdDate, String contents) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.contents = contents;
+    }
+
+    public PostRequestDto toBuilder(PostRequestDto dto) {
+        return PostRequestDto.builder()
+                .id(dto.getId())
+                .createdDate(dto.getCreatedDate())
+                .contents(dto.getContents())
+                .build();
+    }
 }

@@ -2,12 +2,10 @@ package com.teamjm.remade;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 @Builder
 public class PostResponseDto {
     private Long id;

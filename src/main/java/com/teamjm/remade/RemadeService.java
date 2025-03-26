@@ -3,10 +3,8 @@ package com.teamjm.remade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +19,14 @@ public class RemadeService {
         return remadeRepository.save(post);
     }
     @Transactional
-    public Optional<Post> updatePost(Long id, PostRequestDto postRequestDto) {
-        return remadeRepository.findById(id).map(post -> {
-            post.setContents(postRequestDto.getContents());
+    public Post updatePost(Long id, PostRequestDto postRequestDto) {
+        Post post = remadeRepository.findById(id).orElse(null);
+        if (post != null) {
+            post.updateContents(postRequestDto.getContents());
             return remadeRepository.save(post);
-        });
+        }
+        return null;  // Post가 존재하지 않으면 null 반환
     }
+
 
 }
