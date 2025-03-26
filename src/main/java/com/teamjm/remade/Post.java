@@ -1,31 +1,32 @@
 package com.teamjm.remade;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
-import java.time.LocalDate;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-
-@Entity
-@MappedSuperclass
-@SuperBuilder
 @Getter
-@Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@Table(name = "Post")
-public class Post extends BaseEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDate createdDate;
-
-    private LocalDate updatedDate;
-    private String post;
+@Entity
+@NoArgsConstructor
+public class Post extends BaseEntity {
 
 
 
+    @Column(nullable = false)
+    private String contents;
+
+    @Builder
+    public Post(String contents){
+        this.contents = contents;
+    }
+
+    public static Post toEntity(PostRequestDto postRequestDto){
+        return Post.builder()
+                .contents(postRequestDto.getContents())
+                .build();
+    }
+
+    public void updateContents(String contents) {
+        this.contents = contents;
+    }
 }
